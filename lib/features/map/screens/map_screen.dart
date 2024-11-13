@@ -1,3 +1,4 @@
+import 'package:bee_ai/util/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,6 +12,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+
   LatLng? _currentPosition;
 
   @override
@@ -81,10 +83,10 @@ class _MapScreenState extends State<MapScreen> {
                 width: 80.0,
                 height: 80.0,
                 point: _currentPosition!,
-                child: const Icon(
-                  Icons.location_pin,
-                  color: Colors.red,
-                  size: 40,
+                child: Image.asset(
+                  Images.marker,
+                  width: 20.0,
+                  height: 20.0,
                 ),
               ),
             ],

@@ -41,14 +41,12 @@ class _StartScreenState extends State<StartScreen> {
                 Get.toNamed(RouteHelper.getOnboardingScreen());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: CustomTheme.backgroundColor,
+                backgroundColor: CustomTheme.textColor,
                 foregroundColor: CustomTheme.primaryColor,
               ),
               child: Text(
                   'ENTRAR',
-                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                     fontWeight: FontWeight.bold,
-                   ),
+                   style: TextStyle(color: CustomTheme.primaryColor, fontSize: 20),
               ),
             ),
 
