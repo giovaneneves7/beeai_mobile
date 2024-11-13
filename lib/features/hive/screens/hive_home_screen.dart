@@ -23,12 +23,13 @@ class _HiveHomeScreenState extends State<HiveHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: CustomTheme.primaryColor,
       appBar: AppBar(
         title: const Text(
             'Colmeias',
 
         ),
-        backgroundColor: CustomTheme.primaryColor,
+        backgroundColor: CustomTheme.textColor,
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8),

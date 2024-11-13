@@ -1,4 +1,5 @@
 import 'package:bee_ai/helper/route_helper.dart';
+import 'package:bee_ai/theme/custom_theme.dart';
 import 'package:bee_ai/util/images.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,7 @@ class _StartScreenState extends State<StartScreen> {
             Image.asset(
               Images.hive,
               height: 150,
+              color: CustomTheme.textColor,
             ),
             const SizedBox(height: 20),
             Text(
@@ -30,6 +32,7 @@ class _StartScreenState extends State<StartScreen> {
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
+
             ),
 
             const SizedBox(height: 40),
@@ -38,8 +41,8 @@ class _StartScreenState extends State<StartScreen> {
                 Get.toNamed(RouteHelper.getOnboardingScreen());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
-                foregroundColor: Theme.of(context).textTheme.labelLarge?.color,
+                backgroundColor: CustomTheme.backgroundColor,
+                foregroundColor: CustomTheme.primaryColor,
               ),
               child: Text(
                   'ENTRAR',

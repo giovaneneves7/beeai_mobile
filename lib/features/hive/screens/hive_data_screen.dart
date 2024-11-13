@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:bee_ai/common/widgets/custom_bottom_navigation_bar.dart';
+import 'package:bee_ai/theme/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -83,6 +84,7 @@ class _HiveDataScreenState extends State<HiveDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: CustomTheme.textColor,
         title: Text(widget.hiveId),
         actions: [
           IconButton(
@@ -94,7 +96,7 @@ class _HiveDataScreenState extends State<HiveDataScreen> {
       body: Column(
         children: [
           Container(
-            color: Colors.orange,
+            color: Colors.black,
             padding: EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,7 +104,7 @@ class _HiveDataScreenState extends State<HiveDataScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      Icon(Icons.hive, size: 40, color: Colors.white),
+                      Icon(Icons.hive, size: 40, color: CustomTheme.textColor),
                       SizedBox(height: 8),
                       Text(
                         '${widget.hiveId}\n(Ativa)',
@@ -112,7 +114,7 @@ class _HiveDataScreenState extends State<HiveDataScreen> {
                     ],
                   ),
                 ),
-                Expanded(
+                /*Expanded(
                   child: Column(
                     children: [
                       Text(
@@ -128,11 +130,11 @@ class _HiveDataScreenState extends State<HiveDataScreen> {
                       ),
                     ],
                   ),
-                ),
+                ),*/
                 Expanded(
                   child: Column(
                     children: [
-                      Icon(Icons.location_on, size: 24, color: Colors.white),
+                      Icon(Icons.location_on, size: 24, color: CustomTheme.textColor),
                       SizedBox(height: 4),
                       Text(
                         'Localização:',
@@ -153,7 +155,7 @@ class _HiveDataScreenState extends State<HiveDataScreen> {
             child: Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: Colors.black,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
@@ -181,6 +183,7 @@ class _HiveDataScreenState extends State<HiveDataScreen> {
                           Text(
                             temperature,
                             style: TextStyle(
+                              color: CustomTheme.backgroundColor,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -194,6 +197,7 @@ class _HiveDataScreenState extends State<HiveDataScreen> {
                           Text(
                             weight,
                             style: TextStyle(
+                              color: CustomTheme.backgroundColor,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),

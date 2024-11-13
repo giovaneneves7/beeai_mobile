@@ -55,9 +55,10 @@ class _AddHiveScreenState extends State<AddHiveScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: CustomTheme.primaryColor,
       appBar: AppBar(
         title: const Text('Adicionar Colmeia'),
-        backgroundColor: CustomTheme.primaryColor,
+        backgroundColor: CustomTheme.textColor,
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: hives,
@@ -99,13 +100,14 @@ class _AddHiveScreenState extends State<AddHiveScreen> with SingleTickerProvider
                 }
 
                 return Card(
+                  color: CustomTheme.textColor,
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   child: ListTile(
                     title: const Text(
                       'Colmeia',
-                      style: TextStyle(color: CustomTheme.textColor),
+                      style: TextStyle(color: CustomTheme.primaryColor),
                     ),
-                    subtitle: Text(hiveId),
+                    subtitle: Text(hiveId, style: TextStyle(color: CustomTheme.backgroundColor),),
                     onTap: () {
                       // Ação para colmeia com ID
                       Get.toNamed(RouteHelper.getHiveDataScreen(hiveId, ip));

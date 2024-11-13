@@ -5,6 +5,7 @@ import 'package:bee_ai/features/hive/screens/hive_home_screen.dart';
 import 'package:bee_ai/features/map/screens/map_screen.dart';
 import 'package:bee_ai/features/settings/screens/settings_screen.dart';
 import 'package:bee_ai/helper/route_helper.dart';
+import 'package:bee_ai/theme/custom_theme.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -44,14 +45,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: CustomTheme.primaryColor,
       body: _screens[_currentIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.toNamed(RouteHelper.getAddHiveScreen());
         },
-        child: const Icon(Icons.search),
-        backgroundColor: Theme.of(context).primaryColor,
+        child: const Icon(Icons.search, color: CustomTheme.primaryColor,),
+        backgroundColor: CustomTheme.textColor,
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _currentIndex,

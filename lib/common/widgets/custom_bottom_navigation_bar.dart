@@ -1,3 +1,4 @@
+import 'package:bee_ai/theme/custom_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -10,6 +11,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
+      color: CustomTheme.textColor,
       shape: CircularNotchedRectangle(),
       notchMargin: 8.0,
       child: Row(
@@ -19,16 +21,16 @@ class CustomBottomNavigationBar extends StatelessWidget {
             icon: Icon(
               Icons.home,
               color: currentIndex == 0
-                  ? Theme.of(context).primaryColor
+                  ? CustomTheme.backgroundColor
                   : Theme.of(context).iconTheme.color,
             ),
             onPressed: () => onTap(0),
           ),
           IconButton(
             icon: Icon(
-              Icons.cloud,
+              Icons.linear_scale_sharp,
               color: currentIndex == 1
-                  ? Theme.of(context).primaryColor
+                  ? CustomTheme.backgroundColor
                   : Theme.of(context).iconTheme.color,
             ),
             onPressed: () => onTap(1),
@@ -38,7 +40,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             icon: Icon(
               Icons.map,
               color: currentIndex == 2
-                  ? Theme.of(context).primaryColor
+                  ? CustomTheme.backgroundColor
                   : Theme.of(context).iconTheme.color,
             ),
             onPressed: () => onTap(2),
@@ -47,7 +49,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             icon: Icon(
               Icons.settings,
               color: currentIndex == 3
-                  ? Theme.of(context).primaryColor
+                  ? CustomTheme.backgroundColor
                   : Theme.of(context).iconTheme.color,
             ),
             onPressed: () => onTap(3),
