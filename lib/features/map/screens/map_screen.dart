@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:bee_ai/util/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
 class MapScreen extends StatefulWidget {
@@ -13,12 +15,36 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
 
+  List<LatLng> _hiveLocations = [];
   LatLng? _currentPosition;
 
   @override
   void initState() {
     super.initState();
     _determinePosition();
+    _fetchHiveData();
+  }
+
+  Future<void> _fetchHiveData() async {
+    try {
+      final response = await http.get(Uri.parse('http://192.168.1.3/dados'));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        setState(() {
+          _hiveLocations = data
+              .where((hive) => hive['latitude'] != 'null' && hive['longitude'] != 'null')
+              .map((hive) => LatLng(
+            double.parse(hive['latitude']),
+            double.parse(hive['longitude']),
+          ))
+              .toList();
+        });
+      } else {
+        print("Erro: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Erro ao buscar dados das colmeias: $e");
+    }
   }
 
   Future<void> _determinePosition() async {
@@ -76,22 +102,37 @@ class _MapScreenState extends State<MapScreen> {
             'sk.eyJ1IjoicHV0aWZlcm8iLCJhIjoiY20zZzZmZXdsMDE4MjJpb2diZWVvY3F5YSJ9.TBGisV6dvu7uPxP2g9aF7w',
           },
         ),
-        if (_currentPosition != null)
-          MarkerLayer(
-            markers: [
+        MarkerLayer(
+          markers: [
+            // Marker para a posição atual
+            if (_currentPosition != null)
               Marker(
                 width: 80.0,
                 height: 80.0,
                 point: _currentPosition!,
+                child: Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                  size: 30.0,
+                ),
+              ),
+            // Markers para cada colmeia na lista _hiveLocations
+            ..._hiveLocations.map(
+                  (location) => Marker(
+                width: 80.0,
+                height: 80.0,
+                point: location,
                 child: Image.asset(
                   Images.marker,
                   width: 20.0,
                   height: 20.0,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ],
     );
   }
+
 }
