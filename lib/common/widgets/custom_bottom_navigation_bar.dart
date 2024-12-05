@@ -28,7 +28,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(
-              Icons.linear_scale_sharp,
+              Icons.stacked_bar_chart,
               color: currentIndex == 1
                   ? CustomTheme.backgroundColor
                   : Theme.of(context).iconTheme.color,
@@ -45,7 +45,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ),
             onPressed: () => onTap(2),
           ),
-          IconButton(
+          /*IconButton(
             icon: Icon(
               Icons.settings,
               color: currentIndex == 3
@@ -53,7 +53,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   : Theme.of(context).iconTheme.color,
             ),
             onPressed: () => onTap(3),
-          ),
+          ),*/
         ],
       ),
     );

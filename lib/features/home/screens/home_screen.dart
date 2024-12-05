@@ -1,6 +1,6 @@
 import 'package:bee_ai/common/widgets/custom_bottom_navigation_bar.dart';
+import 'package:bee_ai/features/dashboard/screens/dashboard_screen.dart';
 import 'package:bee_ai/features/hive/screens/add_hive_screen.dart';
-import 'package:bee_ai/features/hive/screens/hive_data_screen.dart';
 import 'package:bee_ai/features/hive/screens/hive_home_screen.dart';
 import 'package:bee_ai/features/map/screens/map_screen.dart';
 import 'package:bee_ai/features/settings/screens/settings_screen.dart';
@@ -28,11 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _screens = [
-      //HiveDataScreen(ipLogin: widget.ip),
       HiveHomeScreen(),
+      DashboardScreen(),
       AddHiveScreen(),
       MapScreen(),
-      SettingsScreen(),
     ];
   }
 

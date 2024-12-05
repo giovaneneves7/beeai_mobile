@@ -30,6 +30,7 @@ class _HiveHomeScreenState extends State<HiveHomeScreen> {
 
         ),
         backgroundColor: CustomTheme.textColor,
+
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8),

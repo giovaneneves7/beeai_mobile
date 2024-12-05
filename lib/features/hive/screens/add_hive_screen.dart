@@ -13,8 +13,9 @@ class AddHiveScreen extends StatefulWidget {
 }
 
 class _AddHiveScreenState extends State<AddHiveScreen> with SingleTickerProviderStateMixin {
+
   late AnimationController _controller;
-  late Future<List<Map<String, dynamic>>> hives; // Mudança para lidar com um mapa de dados
+  late Future<List<Map<String, dynamic>>> hives;
 
   @override
   void initState() {
@@ -31,16 +32,17 @@ class _AddHiveScreenState extends State<AddHiveScreen> with SingleTickerProvider
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      // Decodificando o JSON como uma lista de mapas
+
       final List<dynamic> data = json.decode(response.body);
 
-      // Mapeando para a estrutura desejada, com IP e ID
       return data.map((item) {
+
         return {
           'ip': item['ip'].toString(),
-          'id': item['id'] ?? 'null', // Tratando 'null' como string
+          'id': item['id'] ?? 'null',
         };
       }).toList();
+
     } else {
       throw Exception('Erro ao buscar dados das colmeias');
     }
@@ -94,7 +96,6 @@ class _AddHiveScreenState extends State<AddHiveScreen> with SingleTickerProvider
                 final hiveId = hive['id'];
                 final ip = hive['ip'];
 
-                // Se o ID for "null", podemos exibir uma mensagem alternativa ou não exibir o card
                 if (hiveId == 'null') {
                   return const SizedBox();
                 }

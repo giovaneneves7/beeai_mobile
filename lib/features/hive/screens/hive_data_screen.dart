@@ -170,7 +170,7 @@ class _HiveDataScreenState extends State<HiveDataScreen> {
                 borderRadius: BorderRadius.circular(16),
                 child: FlutterMap(
                   options: MapOptions(
-                    initialCenter: LatLng(-11.327027, -41.864856),
+                    initialCenter: (lat != null && lng != null) ? LatLng(lat!, lng!) : LatLng(-11.327027, -41.864856),
                     initialZoom: 17,
                     cameraConstraint: CameraConstraint.contain(
                       bounds: LatLngBounds(
