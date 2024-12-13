@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:bee_ai/util/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
@@ -14,66 +15,71 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-
-  List<LatLng> _hiveLocations = [];
+  List<Marker> _markers = [];
+  final PopupController _popupController = PopupController();
   LatLng? _currentPosition;
 
   @override
   void initState() {
     super.initState();
     _determinePosition();
-    _fetchHiveData();
+    _initializeMarkers();
   }
 
-  Future<void> _fetchHiveData() async {
-    try {
-      final response = await http.get(Uri.parse('http://192.168.1.3/dados'));
-      if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-        setState(() {
-          _hiveLocations = data
-              .where((hive) => hive['latitude'] != 'null' && hive['longitude'] != 'null')
-              .map((hive) => LatLng(
-            double.parse(hive['latitude']),
-            double.parse(hive['longitude']),
-          ))
-              .toList();
-        });
-      } else {
-        print("Erro: ${response.statusCode}");
-      }
-    } catch (e) {
-      print("Erro ao buscar dados das colmeias: $e");
-    }
+  void _initializeMarkers() {
+    // Adiciona os marcadores com dados fictícios de umidade e temperatura
+    _markers = [
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(-11.326527, -41.864056),
+        child: Image.asset(
+          Images.marker,
+          width: 20.0,
+          height: 20.0,
+        ),
+        key: const ValueKey('marker1'), // Chave única para o popup
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(-11.327527, -41.865056),
+        child: Image.asset(
+          Images.marker,
+          width: 20.0,
+          height: 20.0,
+        ),
+        key: const ValueKey('marker2'),
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(-11.328027, -41.864556),
+        child: Image.asset(
+          Images.marker,
+          width: 20.0,
+          height: 20.0,
+        ),
+        key: const ValueKey('marker3'),
+      ),
+    ];
   }
 
   Future<void> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Verifica se o serviço de localização está habilitado
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Serviço de localização não está habilitado
-      return;
-    }
+    if (!serviceEnabled) return;
 
-    // Solicita permissão para localização
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissão negada pelo usuário
-        return;
-      }
+      if (permission == LocationPermission.denied) return;
     }
 
-    if (permission == LocationPermission.deniedForever) {
-      // Permissão negada para sempre
-      return;
-    }
+    if (permission == LocationPermission.deniedForever) return;
 
-    // Obtém a posição atual do dispositivo
     Position position = await Geolocator.getCurrentPosition();
     setState(() {
       _currentPosition = LatLng(position.latitude, position.longitude);
@@ -86,53 +92,54 @@ class _MapScreenState extends State<MapScreen> {
       options: MapOptions(
         initialCenter: _currentPosition ?? LatLng(-11.327027, -41.864856),
         initialZoom: 17,
-        cameraConstraint: CameraConstraint.contain(
-          bounds: LatLngBounds(
-            const LatLng(-90, -180),
-            const LatLng(90, 180),
-          ),
-        ),
+        onTap: (_, __) => _popupController.hideAllPopups(),
       ),
       children: [
         TileLayer(
           urlTemplate:
           "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}@2x?access_token=sk.eyJ1IjoicHV0aWZlcm8iLCJhIjoiY20zZzZmZXdsMDE4MjJpb2diZWVvY3F5YSJ9.TBGisV6dvu7uPxP2g9aF7w",
-          additionalOptions: {
-            'accessToken':
-            'sk.eyJ1IjoicHV0aWZlcm8iLCJhIjoiY20zZzZmZXdsMDE4MjJpb2diZWVvY3F5YSJ9.TBGisV6dvu7uPxP2g9aF7w',
-          },
         ),
-        MarkerLayer(
-          markers: [
-            // Marker para a posição atual
-            if (_currentPosition != null)
-              Marker(
-                width: 80.0,
-                height: 80.0,
-                point: _currentPosition!,
-                child: Icon(
-                  Icons.location_on,
-                  color: Colors.red,
-                  size: 30.0,
-                ),
-              ),
-            // Markers para cada colmeia na lista _hiveLocations
-            ..._hiveLocations.map(
-                  (location) => Marker(
-                width: 80.0,
-                height: 80.0,
-                point: location,
-                child: Image.asset(
-                  Images.marker,
-                  width: 20.0,
-                  height: 20.0,
-                ),
-              ),
+        PopupMarkerLayer(
+          options: PopupMarkerLayerOptions(
+            markers: _markers,
+            popupController: _popupController,
+            popupDisplayOptions: PopupDisplayOptions(
+              builder: (BuildContext context, Marker marker) {
+                // Dados fictícios para cada marcador
+                final Map<String, dynamic> fakeData = {
+                  'marker1': {'umidade': 75, 'temperatura': 30},
+                  'marker2': {'umidade': 60, 'temperatura': 28},
+                  'marker3': {'umidade': 80, 'temperatura': 29},
+                };
+
+                // Determina os dados do marcador atual
+                final data = fakeData[marker.key.toString()] ??
+                    {'umidade': '39', 'temperatura': '24', 'peso' : '65kg'};
+
+                return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Umidade: ${data['umidade']}%",
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          "Temperatura: ${data['temperatura']}°C",
+                          textAlign: TextAlign.center,
+                        ),
+                        Text("Peso: ${data['peso']}"),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
+          ),
         ),
       ],
     );
   }
-
 }

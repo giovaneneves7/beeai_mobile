@@ -49,44 +49,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "\$18,908.00",
+            "Total de Colmeias Ativas:"
+          ),
+          const Text(
+            "18 Colmeias",
             style: TextStyle(
               color: Colors.white,
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 4),
-          const Text(
-            "+ \$1,420.00 (8%)",
-            style: TextStyle(color: Colors.green, fontSize: 14),
-          ),
           const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                  ),
-                  child: const Text("Deposit"),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                  ),
-                  child: const Text("Withdraw"),
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
@@ -103,7 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Portfolio",
+            "Colmeias",
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -112,11 +85,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 12),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _buildPortfolioCard("AAPL", "\$149.86", "+4.5%"),
-              _buildPortfolioCard("AMZN", "\$84.92", "+2.1%"),
-              _buildPortfolioCard("SBUX", "\$98.30", "-1.2%"),
+              _buildPortfolioCard("COL001", "78kg", "+4.5kg"),
+              const SizedBox(width: 10,),
+              _buildPortfolioCard("COL002", "65kg", "-2.1kg"),
             ],
           ),
         ],
@@ -174,7 +147,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Statistics",
+            "Produção de Mel (ml):",
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,
